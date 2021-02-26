@@ -40,7 +40,7 @@
           <el-input v-model="filters.ip" placeholder="请输入ip"></el-input>
         </el-form-item>
 
-        
+
         <el-form-item>
           <el-button type="primary" @click="getSnapshots">查询</el-button>
         </el-form-item>
@@ -75,7 +75,7 @@
         </el-table-column>
         <el-table-column prop="target" label="Target" width="250" >
         </el-table-column>
-         
+
            <el-table-column prop="createTime" label="创建时间" width="200" >
         </el-table-column>
         <el-table-column prop="startTime" label="开始时间" width="200" >
@@ -105,10 +105,10 @@
  <!--查看界面-->
     <el-dialog title="任务快照详情" :visible.sync="viewFormVisible" :close-on-click-modal="false">
       <el-form :model="viewForm" label-width="100px"  ref="viewForm">
-          <el-form-item label="任务Id" prop="id">
+          <el-form-item label="快照Id" prop="id">
           <el-input v-model="viewForm.id" auto-complete="off" disabled></el-input>
         </el-form-item>
-            <el-form-item label="任务id" prop="jobId">
+            <el-form-item label="任务Id" prop="jobId">
           <el-input v-model="viewForm.jobId" auto-complete="off" disabled></el-input>
         </el-form-item>
         <el-form-item label="任务名称" prop="name">
@@ -139,7 +139,7 @@
             <el-form-item label="状态" prop="status">
             <el-input v-model="viewForm.status"  auto-complete="off" disabled></el-input>
           </el-form-item>
-         
+
               <el-form-item label="耗时" prop="times">
             <el-input v-model="viewForm.times"  auto-complete="off" disabled></el-input>
           </el-form-item>
@@ -165,7 +165,7 @@
       </div>
     </el-dialog>
 
-    
+
 
 
   </section>
@@ -218,7 +218,7 @@ handleSizeChange(size ){
    handleView(index, row){
      this.viewForm = Object.assign({}, row)
      this.viewFormVisible =true
-       
+
    },
    handleDelete(index, row){
 
@@ -231,13 +231,13 @@ handleSizeChange(size ){
                 type: 'success'
               })
               this.getSnapshots()
-             
+
             })
           })
    },
     // 获取任务执行快照列表
     getSnapshots: function () {
-     
+
       let para =Object.assign({"pageNo":this.page,"pageSize":this.pageSize}, this.filters)
       this.loading = true
       executeSnapshotList(para).then((res) => {
@@ -247,7 +247,7 @@ handleSizeChange(size ){
       })
     },
     groupList(){
- 
+
       let para = {}
       groupConfList(para).then((res) => {
         this.groups = res.data

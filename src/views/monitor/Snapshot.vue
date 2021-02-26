@@ -69,7 +69,7 @@
 
  <!--查看界面-->
     <el-dialog title="任务快照详情" :visible.sync="viewFormVisible" :close-on-click-modal="false">
-      <el-form :model="viewForm" label-width="100px"  ref="viewForm">
+      <el-form :model="viewForm" label-width="100px" ref="viewForm">
           <el-form-item label="任务Id" prop="id">
           <el-input v-model="viewForm.id" auto-complete="off" disabled></el-input>
         </el-form-item>
@@ -106,7 +106,7 @@
       </div>
     </el-dialog>
 
-    
+
 
 
   </section>
@@ -132,7 +132,7 @@ export default {
    handleView(index, row){
      this.viewForm = Object.assign({}, row)
      this.viewFormVisible =true
-       
+
    },
    handleDelete(index, row){
 
@@ -145,13 +145,13 @@ export default {
                 type: 'success'
               })
               this.getSnapshots()
-             
+
             })
           })
    },
     // 获取任务列表
     getSnapshots: function () {
-     
+
       let para =Object.assign({}, this.filters)
       this.loading = true
       snapshotList(para).then((res) => {
@@ -160,7 +160,7 @@ export default {
       })
     },
     groupList(){
- 
+
       let para = {}
       groupConfList(para).then((res) => {
         this.groups = res.data
