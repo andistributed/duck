@@ -30,7 +30,7 @@ const routes = [
           { path: '/monitor/plan',     iconCls:'fa fa-first-order fa-lg',  component: () => import('@/views/monitor/Plan.vue'), name: '执行计划' },
           { path: '/monitor/node',iconCls: 'fa fa-hourglass-start fa-lg', component: () => import('@/views/monitor/Node.vue'), name: '调度集群' },
           { path: '/monitor/snapshot',iconCls: 'fa fa-heartbeat fa-lg', component: () => import('@/views/monitor/Snapshot.vue'), name: '任务快照' },
-          { path: '/monitor/execute/snapshot',iconCls: 'fa fa-free-code-camp fa-lg', component: () => import('@/views/monitor/Execute.vue'), name: '任务作业快照' }
+          { path: '/monitor/execute/snapshot',iconCls: 'fa fa-free-code-camp fa-lg', component: () => import('@/views/monitor/Execute.vue'), name: '作业快照' }
 
         ]
       }
