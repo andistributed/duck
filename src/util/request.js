@@ -44,7 +44,7 @@ service.interceptors.response.use(
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 0) {
       if (res.code == -2) {
-        localStorage.setItem('token', '');
+        localStorage.removeItem('token');
         MessageBox({message: res.message, title:'未登录', type:'error', callback:function(type){
           if(type=='confirm') router.push('/login');
         }});

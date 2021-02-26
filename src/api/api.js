@@ -8,6 +8,14 @@ export function login(data) {
   })
 }
 
+export function logout(data) {
+  return request({
+    url: '/logout',
+    method: 'post',
+    data
+  })
+}
+
 export function jobConfList(data) {
     return request({
       url: '/job/list',

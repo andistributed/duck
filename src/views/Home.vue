@@ -80,6 +80,7 @@
 </template>
 
 <script>
+import {logout} from '@/api/api'
 export default {
   data () {
     return {
@@ -133,8 +134,10 @@ export default {
       this.$confirm('确认退出吗?', '提示', {
         // type: 'warning'
       }).then(() => {
-        sessionStorage.removeItem('user')
-        _this.$router.push('/login')
+        logout(this.form).then((res) => {
+          localStorage.removeItem('token')
+          _this.$router.push('/login')
+        });
       }).catch(() => {
 
       })
