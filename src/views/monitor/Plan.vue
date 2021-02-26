@@ -16,9 +16,9 @@
         </el-table-column>
         <el-table-column prop="cron" label="Cron表达式" width="100" >
         </el-table-column>
-           <el-table-column prop="beforeTime" label="上次执行时间" width="150" >
+           <el-table-column prop="beforeTime" label="上次执行时间" width="160" >
         </el-table-column>
-           <el-table-column prop="nextTime" label="下次执行时间" width="150" >
+           <el-table-column prop="nextTime" label="下次执行时间" width="160" >
         </el-table-column>
         <el-table-column prop="target" label="target">
         </el-table-column>
@@ -79,10 +79,10 @@
 
      <!--查看界面-->
     <el-dialog title="执行任务Client列表" :visible.sync="viewClientFormVisible" :close-on-click-modal="false">
-      
+
        <!--列表-->
       <el-table :data="clients" highlight-current-row v-loading="loading"  style="width: 100%;">
-        
+
         <el-table-column prop="name" label="client" width="150">
         </el-table-column>
         <el-table-column prop="group" label="集群" width="150">
@@ -117,7 +117,7 @@ export default {
    handleView(index, row){
      this.viewForm = Object.assign({}, row)
      this.viewFormVisible =true
-       
+
    },
    handleClientView(index, row){
 
@@ -139,6 +139,10 @@ export default {
       }
       this.loading = true
       planList(para).then((res) => {
+        for(var i = 0; i < res.data.length; i++){
+          res.data[i].beforeTime = this.formatTime(res.data[i].beforeTime)
+          res.data[i].nextTime = this.formatTime(res.data[i].nextTime)
+        }
          this.loading = false
         this.plans = res.data
       })

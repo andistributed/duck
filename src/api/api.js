@@ -58,6 +58,22 @@ export function jobConfList(data) {
     })
   }
 
+  export function groupEdit(data) {
+    return request({
+      url: '/group/edit',
+      method: 'post',
+      data
+    })
+  }
+
+  export function groupDelete(data) {
+    return request({
+      url: '/group/delete',
+      method: 'post',
+      data
+    })
+  }
+
  // 任务执行计划
   export function planList(data) {
     return request({
@@ -75,7 +91,7 @@ export function jobConfList(data) {
       data
     })
   }
-  
+
   // 调度集群节点信息
   export function nodeList(data) {
     return request({
@@ -112,4 +128,3 @@ export function jobConfList(data) {
       data
     })
   }
-  

@@ -5,7 +5,7 @@
   <div slot="header" class="clearfix">
     <span>任务快照列表</span>
   </div>
-  <div  class="text item">
+  <div class="text item">
     <el-alert
     title="只展示前500条任务快照信息,带有条件筛选一定选择任务集群..."
     type="warning">
