@@ -31,14 +31,35 @@ const routes = [
           { path: '/monitor/node',iconCls: 'fa fa-hourglass-start fa-lg', component: () => import('@/views/monitor/Node.vue'), name: '调度集群' },
           { path: '/monitor/snapshot',iconCls: 'fa fa-heartbeat fa-lg', component: () => import('@/views/monitor/Snapshot.vue'), name: '任务快照' },
           { path: '/monitor/execute/snapshot',iconCls: 'fa fa-free-code-camp fa-lg', component: () => import('@/views/monitor/Execute.vue'), name: '任务作业快照' }
-         
+
         ]
       }
 
   ]
 
+const router = new VueRouter({
+  routes
+});
 
+/// 全局路由守卫
+// 所有的路由都会先走守卫
+// 添加导航守卫之后，不管是访问哪个路由，都会执行这个回调函数中的代码
+// 因为所有的路由，都会经过该导航守卫，所以就可以在这个导航守卫的回调函数中，判断有没有登录
+router.beforeEach((to, from, next) => {//to去哪里    from从哪来   next放行
+  if(to.path==='/login'){
+      next()
+      return;
+  }
+  // 如果访问的不是login页面，先判断有没有登录，如果已经登录直接调用next()方法，如果没有跳转login页面
+  // 通过登录成功时候保存的token，来作为判断有没有登录成功的条件
+  const token = localStorage.getItem('token')
+  if(token){ // 登录成功
+    next()
+    return;
+  }
+  // 登录失败
+  next('/login')
+});
+// */
 
-  export default new VueRouter({
-    routes
-  })
+export default router;
