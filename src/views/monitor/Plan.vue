@@ -190,12 +190,8 @@ export default {
       let para = {};
       this.loading = true;
       planList(para).then((res) => {
-        if(res.data) for (var i = 0; i < res.data.length; i++) {
-          res.data[i].beforeTime = this.formatTime(res.data[i].beforeTime);
-          res.data[i].nextTime = this.formatTime(res.data[i].nextTime);
-        }
         this.loading = false;
-        this.plans = res.data || [];
+        this.plans = this.formatTimeEach(res.data,['beforeTime','nextTime']);
       });
     },
   },
