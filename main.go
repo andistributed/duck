@@ -18,6 +18,9 @@ var fs embed.FS
 func EmbedFile(fs embed.FS) func(c echo.Context) error {
 	return func(c echo.Context) error {
 		file := c.Param(`*`)
+		if len(file) == 0 {
+			file = `index.html`
+		}
 		f, err := fs.Open(file)
 		if err != nil {
 			return echo.ErrNotFound
@@ -59,5 +62,6 @@ func init() {
 func main() {
 	defaults.Use(middleware.Recover(), middleware.Log(), middleware.Gzip())
 	defaults.Get(`/*`, EmbedFile(fs))
+	defaults.Get(`/`, EmbedFile(fs))
 	defaults.Run(standard.New(listen))
 }
