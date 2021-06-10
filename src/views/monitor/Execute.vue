@@ -222,11 +222,11 @@ handleSizeChange(size ){
    },
    handleDelete(index, row){
 
-     this.$confirm('确认要删除此任务任务快照信息吗？', '友情提示', {}).then(() => {
+     this.$confirm('确认要删除此任务快照信息吗？', '友情提示', {}).then(() => {
            let para = Object.assign({}, row)
             snapshotDelete(para).then((res) => {
               // NProgress.done();
-                   this.$message({
+                this.$message({
                 message: "删除成功",
                 type: 'success'
               })
