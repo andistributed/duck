@@ -4,7 +4,7 @@ import router from '../router'
 
 // create an axios instance
 const service = axios.create({
-  baseURL: process.env.BASE_URL||"http://127.0.0.1:2856", // url = base url + request url
+  baseURL: window.BASE_URL||process.env.BASE_URL||"http://127.0.0.1:2856", // url = base url + request url
   headers: {
     Accept: "application/json"
   },
