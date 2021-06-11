@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 
 	"github.com/andistributed/duck"
 	"github.com/webx-top/echo"
@@ -20,10 +21,15 @@ func init() {
 }
 
 func main() {
+	baseURL := []byte(`window.BASE_URL=` + fmt.Sprintf(`%q`, api) + `;`)
 	fs := echo.NewFileSystems()
 	fs.Register(duck.FS)
 	defaults.Use(middleware.Recover(), middleware.Log(), middleware.Gzip())
 	defaults.Get(`/*`, echo.EmbedFile(fs))
 	defaults.Get(`/`, echo.EmbedFile(fs))
+	defaults.Get(`/config.js`, func(ctx echo.Context) error {
+		ctx.Response().Header().Set(echo.HeaderContentType, echo.MIMEApplicationJavaScriptCharsetUTF8)
+		return ctx.Blob(baseURL)
+	})
 	defaults.Run(standard.New(listen))
 }
