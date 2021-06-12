@@ -28,7 +28,7 @@
         </el-table-column>
         <el-table-column prop="cron" label="Cron表达式" width="100" >
         </el-table-column>
-        
+
         <el-table-column prop="status" label="状态" width="120">
           <template slot-scope="scope">
               <el-tag type="success" size="mini" v-if="scope.row.status==1">启用</el-tag>
@@ -60,7 +60,7 @@
       </el-table>
   </div>
 </el-card>
-    
+
     <!--新增界面-->
     <el-dialog title="新增任务" :visible.sync="addFormVisible" :close-on-click-modal="false">
       <el-form :model="addForm" label-width="100px" :rules="addFormRules" ref="addForm">
@@ -77,9 +77,17 @@
           </el-option>
         </el-select>
         </el-form-item>
-        <el-form-item label="Cron表达式" prop="cron">
-             <el-input v-model="addForm.cron" auto-complete="off" placeholder="请输入Cron表达式"></el-input>
+        <el-form-item label="Cron表达式" prop="cron" class="cron-input-container">
+          <el-input v-model="addForm.cron" auto-complete="off">
+             <el-button slot="append" v-if="!showCronBox" icon="el-icon-arrow-down" @click="showCronBox = true" title="打开图形配置"></el-button>
+             <el-button slot="append" v-else icon="el-icon-arrow-up" @click="showCronBox = false" title="关闭图形配置"></el-button>
+          </el-input>
         </el-form-item>
+        <el-form-item class="cron-picker-container">
+            <cron v-if="showCronBox" v-model="addForm.cron"></cron>
+            <span class="help-block">格式：0/10 * * * * ? 分别代表：秒 分 时 日 月 周</span>
+        </el-form-item>
+
         <el-form-item label="状态" prop="status">
           <el-select v-model="addForm.status" placeholder="请选择任务状态" style="width:100%;">
           <el-option
@@ -90,17 +98,20 @@
           </el-option>
         </el-select>
         </el-form-item>
-         <el-form-item label="目标任务" prop="target">
-            <el-input v-model="addForm.target" placeholder="请输入目标任务" auto-complete="off"></el-input>
+         <el-form-item label="目标任务" prop="target" class="has-addon">
+          <el-input v-model="addForm.target" placeholder="请输入目标任务"></el-input>
+        </el-form-item>
+         <el-form-item class="input-help-block">
+          <span class="help-block">请务必确保目标任务在所选集群内的每一台机器上都存在</span>
         </el-form-item>
          <el-form-item label="任务参数" prop="params">
-            <el-input v-model="addForm.params" placeholder="请输入任务参数" auto-complete="off"></el-input>
+            <el-input v-model="addForm.params" placeholder="请输入任务参数"></el-input>
         </el-form-item>
           <el-form-item label="手机号码" prop="mobile">
-            <el-input v-model="addForm.mobile" placeholder="请输入手机号码" auto-complete="off"></el-input>
+            <el-input v-model="addForm.mobile" placeholder="请输入手机号码"></el-input>
           </el-form-item>
             <el-form-item label="备注" prop="remark">
-            <el-input v-model="addForm.remark" placeholder="请输入任务备注" auto-complete="off"></el-input>
+            <el-input v-model="addForm.remark" placeholder="请输入任务备注"></el-input>
           </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -126,8 +137,15 @@
           </el-option>
         </el-select>
         </el-form-item>
-        <el-form-item label="Cron表达式" prop="cron">
-             <el-input v-model="editForm.cron" auto-complete="off" placeholder="请输入Cron表达式" ></el-input>
+        <el-form-item label="Cron表达式" prop="cron" class="cron-input-container">
+          <el-input v-model="editForm.cron" auto-complete="off">
+             <el-button slot="append" v-if="!showCronBox" icon="el-icon-arrow-down" @click="showCronBox = true" title="打开图形配置"></el-button>
+             <el-button slot="append" v-else icon="el-icon-arrow-up" @click="showCronBox = false" title="关闭图形配置"></el-button>
+          </el-input>
+        </el-form-item>
+        <el-form-item class="cron-picker-container">
+            <cron v-if="showCronBox" v-model="editForm.cron"></cron>
+            <span class="help-block">格式：0/10 * * * * ? 分别代表：秒 分 时 日 月 周</span>
         </el-form-item>
         <el-form-item label="状态" prop="status">
           <el-select v-model="editForm.status" placeholder="请选择任务状态" style="width:100%;">
@@ -139,17 +157,20 @@
           </el-option>
         </el-select>
         </el-form-item>
-         <el-form-item label="目标任务" prop="target">
-            <el-input v-model="editForm.target" placeholder="请输入目标任务" auto-complete="off"></el-input>
+         <el-form-item label="目标任务" prop="target" class="has-addon">
+            <el-input v-model="editForm.target" placeholder="请输入目标任务"></el-input>
+        </el-form-item>
+         <el-form-item class="input-help-block">
+          <span class="help-block">请务必确保目标任务在所选集群内的每一台机器上都存在</span>
         </el-form-item>
          <el-form-item label="任务参数" prop="params">
-            <el-input v-model="editForm.params" placeholder="请输入任务参数" auto-complete="off"></el-input>
+            <el-input v-model="editForm.params" placeholder="请输入任务参数"></el-input>
         </el-form-item>
           <el-form-item label="手机号码" prop="mobile">
-            <el-input v-model="editForm.mobile" placeholder="请输入手机号码" auto-complete="off"></el-input>
+            <el-input v-model="editForm.mobile" placeholder="请输入手机号码"></el-input>
           </el-form-item>
             <el-form-item label="备注" prop="remark">
-            <el-input v-model="editForm.remark" placeholder="请输入任务备注" auto-complete="off"></el-input>
+            <el-input v-model="editForm.remark" placeholder="请输入任务备注"></el-input>
           </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -189,16 +210,16 @@
         </el-select>
         </el-form-item>
          <el-form-item label="目标任务" prop="target">
-            <el-input v-model="viewForm.target" placeholder="请输入目标任务" auto-complete="off" disabled></el-input>
+            <el-input v-model="viewForm.target" placeholder="请输入目标任务" disabled></el-input>
         </el-form-item>
          <el-form-item label="任务参数" prop="params">
-            <el-input v-model="viewForm.params" placeholder="请输入任务参数" auto-complete="off" disabled></el-input>
+            <el-input v-model="viewForm.params" placeholder="请输入任务参数" disabled></el-input>
         </el-form-item>
           <el-form-item label="手机号码" prop="mobile">
-            <el-input v-model="viewForm.mobile" placeholder="请输入手机号码" auto-complete="off" disabled></el-input>
+            <el-input v-model="viewForm.mobile" placeholder="请输入手机号码" disabled></el-input>
           </el-form-item>
             <el-form-item label="备注" prop="remark">
-            <el-input v-model="viewForm.remark" placeholder="请输入任务备注" auto-complete="off" disabled></el-input>
+            <el-input v-model="viewForm.remark" placeholder="请输入任务备注" disabled></el-input>
           </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -210,12 +231,19 @@
 </template>
 <script>
 import { jobConfList,groupConfList,jobAdd,jobEdit,jobDelete,jobExecute } from '@/api/api'
+import cron from '@/components/cron'
+
 export default {
+  components: {
+    cron
+  },
+
   data () {
     return {
       filters: {
         name: ''
       },
+      showCronBox: false,
       addFormVisible: false, // 新增界面是否显示
       addLoading: false,
       loading:false,
@@ -291,7 +319,7 @@ export default {
     }
   },
   methods: {
-   
+
     handleManual(index, row){
 
        this.$confirm('确认要立即此任务吗？', '友情提示', {}).then(() => {
@@ -306,23 +334,23 @@ export default {
 
 
        })
-         
+
     },
    handleView(index, row){
      this.viewForm = Object.assign({}, row)
      this.viewFormVisible =true
-       
+
    },
    handleEdit(index, row){
      this.editForm = Object.assign({}, row)
      this.editFormVisible =true
-       
+
    },
    handleDelete(index, row){
 
      this.$confirm('确认要删除此任务配置信息吗？', '友情提示', {}).then(() => {
             this.addLoading = true
-           
+
             let para = {id:row.id}
             jobDelete(para).then((res) => {
               this.addLoading = false
@@ -340,7 +368,7 @@ export default {
                   type: 'error'
                 })
               }
-             
+
             })
           })
    },
@@ -357,7 +385,7 @@ export default {
                     message: "添加成功",
                     type: 'success'
                   })
-              // reset the form 
+              // reset the form
               this.$refs['addForm'].resetFields()
               this.addFormVisible = false
               this.getJobList()
@@ -381,7 +409,7 @@ export default {
                     message: "修改成功",
                     type: 'success'
                   })
-              // reset the form 
+              // reset the form
               this.$refs['editForm'].resetFields()
               this.editFormVisible = false
               this.getJobList()
@@ -424,5 +452,9 @@ export default {
 </script>
 
 <style scoped>
-
+  .el-form-item__content{line-height: 2em !important;}
+  .cron-input-container,
+  .cron-picker-container,
+  .has-addon,.is-addon,
+  .input-help-block{margin-bottom:5px !important;}
 </style>
