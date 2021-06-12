@@ -156,7 +156,7 @@ export default {
 }
 </script>
 
-<style lang="css" scoped>
+<style lang="css">
 .cron {
   text-align: left;
   padding: 10px;
