@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="login-container">
     <el-form ref="loginForm" :model="form" :rules="rules" label-width="80px" class="login-box" @keyup.enter.native="onSubmit('loginForm')">
       <h3 class="login-title">欢迎登录</h3>
       <el-form-item label="账号" prop="username">
@@ -81,19 +81,26 @@ import Message from 'element-ui'
 
 <style lang="scss" scoped>
   .login-box {
-    border: 1px solid #ccc;
     width: 350px;
     margin: 180px auto;
     padding: 35px 35px 15px 35px;
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
-    box-shadow: 1px 1px 25px #909399;
+    box-shadow: 1px 1px 25px #333;
+    background-color: #fff;
   }
 
   .login-title {
     text-align: center;
     margin: 0 auto 40px auto;
     color: #303133;
+  }
+  .login-container{
+    background-color: #555;
+    width: 100%;
+    min-height: 100vh;
+    top: 0;
+    position: absolute;
   }
 </style>
