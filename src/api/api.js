@@ -143,3 +143,11 @@ export function executeSnapshotList(data) {
     data
   })
 }
+
+// 任务重试
+export function executeSnapshotRetry(id) {
+  return request({
+    url: '/execute/snapshot/retry/'+id,
+    method: 'post',
+  })
+}

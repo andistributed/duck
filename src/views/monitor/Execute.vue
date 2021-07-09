@@ -81,6 +81,11 @@
           size="mini"
           type="primary"
           @click="handleView(scope.$index, scope.row)">详情</el-button>
+         <el-button
+          size="mini"
+          type="warning"
+          v-if="scope.row.status==-1"
+          @click="handleRetry(scope.$index, scope.row)">重试</el-button>
       </template>
     </el-table-column>
       </el-table>
@@ -159,7 +164,7 @@
   </section>
 </template>
 <script>
-import { executeSnapshotList,groupConfList,snapshotDelete} from '@/api/api'
+import { executeSnapshotList,executeSnapshotRetry,groupConfList,snapshotDelete} from '@/api/api'
 export default {
   data () {
     return {
@@ -189,21 +194,30 @@ export default {
     }
   },
   methods: {
-
-handleSizeChange(size ){
-    this.pageSize =size
-    this.getSnapshots()
-},
-      handleCurrentChange(va){
-          this.page =va
-          this.getSnapshots()
-      },
-   handleView(index, row){
-     this.viewForm = Object.assign({}, row)
-     this.viewFormVisible =true
-
-   },
-   handleDelete(index, row){
+    handleSizeChange(size ){
+      this.pageSize = size
+      this.getSnapshots()
+    },
+    handleCurrentChange(va){
+      this.page = va
+      this.getSnapshots()
+    },
+    handleView(index, row){
+      this.viewForm = Object.assign({}, row)
+      this.viewFormVisible =true
+    },
+    handleRetry(index, row){
+     this.$confirm('确认要重试此任务吗？', '友情提示', {}).then(() => {
+      executeSnapshotRetry(row.id).then((res) => {
+        this.$message({
+          message: "已经开始重试",
+          type: 'success'
+        })
+        this.getSnapshots();
+      })
+     })
+    },
+    handleDelete(index, row){
      this.$confirm('确认要删除此任务快照信息吗？', '友情提示', {}).then(() => {
            let para = Object.assign({}, row)
             snapshotDelete(para).then((res) => {
@@ -219,7 +233,7 @@ handleSizeChange(size ){
    },
     // 获取任务执行快照列表
     getSnapshots: function () {
-      let para =Object.assign({"pageNo":this.page,"pageSize":this.pageSize}, this.filters)
+      let para = Object.assign({"pageNo":this.page,"pageSize":this.pageSize}, this.filters)
       this.loading = true
       executeSnapshotList(para).then((res) => {
          this.loading = false
