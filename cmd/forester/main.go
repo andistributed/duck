@@ -11,16 +11,24 @@ import (
 	"github.com/webx-top/echo/middleware"
 )
 
+const defaultVersion = `0.0.2`
+
 var listen string
 var api string
+var version bool
 
 func init() {
 	flag.StringVar(&listen, `listen`, `:8086`, `-listen 127.0.0.1`)
 	flag.StringVar(&api, `api`, `http://127.0.0.1:2856`, `-api http://127.0.0.1:2856`)
+	flag.BoolVar(&version, `version`, false, `-version`)
 	flag.Parse()
 }
 
 func main() {
+	if version {
+		fmt.Println(`v` + defaultVersion)
+		return
+	}
 	baseURL := []byte(`window.BASE_URL=` + fmt.Sprintf(`%q`, api) + `;`)
 	fs := echo.NewFileSystems()
 	fs.Register(duck.FS)
