@@ -59,7 +59,7 @@
               <el-tag type="success" size="mini" v-if="scope.row.status==1">EXECUTING</el-tag>
               <el-tag type="primary" size="mini" v-else-if="scope.row.status==2">COMPLETE</el-tag>
                <el-tag type="danger" size="mini" v-else-if="scope.row.status==-1">ERROR</el-tag>
-               <el-tag type="warning" size="mini" v-else-if="scope.row.status==3">UNKNOW</el-tag>
+               <el-tag type="warning" size="mini" v-else-if="scope.row.status==3">UNKNOWN</el-tag>
           </template>
         </el-table-column>
          <el-table-column label="耗时" width="100" >
@@ -84,7 +84,7 @@
          <el-button
           size="mini"
           type="warning" style="margin-left:0"
-          v-if="scope.row.canRetry"
+          v-if="scope.row.canRetry == true"
           @click="handleRetry(scope.$index, scope.row)">重试</el-button>
       </template>
     </el-table-column>
@@ -92,7 +92,7 @@
 
        <!--工具条-->
     <el-col :span="24" class="toolbar">
-      <el-pagination layout="total,sizes,prev, pager, next"  @size-change="handleSizeChange" @current-change="handleCurrentChange" :page-size="pageSize"  :page-sizes="[20, 30, 50, 100]" :total="total" style="float:right;">
+      <el-pagination layout="total,sizes,prev, pager, next"  @size-change="handleSizeChange" @current-change="handleCurrentChange" :page-size="pageSize" :page-sizes="[20, 30, 50, 100]" :total="total" style="float:right;">
       </el-pagination>
     </el-col>
   </div>
@@ -176,7 +176,7 @@ export default {
         status:[
             {"name":"EXECUTING","value":1},
             {"name":"COMPLETE","value":2},
-            {"name":"UNKNOW","value":3},
+            {"name":"UNKNOWN","value":3},
             {"name":"ERROR","value":-1}
         ],
         groups:{},

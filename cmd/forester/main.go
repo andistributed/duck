@@ -11,7 +11,7 @@ import (
 	"github.com/webx-top/echo/middleware"
 )
 
-const defaultVersion = `0.0.2`
+const defaultVersion = `0.0.3`
 
 var listen string
 var api string
