@@ -83,7 +83,7 @@
           @click="handleView(scope.$index, scope.row)">详情</el-button>
          <el-button
           size="mini"
-          type="warning"
+          type="warning" style="margin-left:0"
           v-if="scope.row.status==-1"
           @click="handleRetry(scope.$index, scope.row)">重试</el-button>
       </template>

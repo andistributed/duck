@@ -8,7 +8,7 @@ import VueRouter from 'vue-router';
 
 
 const routes = [
-    { path: '/login', component: Login,hidden: true },
+    { path: '/login', component: Login, hidden: true },
     { path: '/404', component: NotFound ,hidden: true},
     {
         path: '/',
@@ -46,7 +46,7 @@ const router = new VueRouter({
 // 添加导航守卫之后，不管是访问哪个路由，都会执行这个回调函数中的代码
 // 因为所有的路由，都会经过该导航守卫，所以就可以在这个导航守卫的回调函数中，判断有没有登录
 router.beforeEach((to, from, next) => {//to去哪里    from从哪来   next放行
-  if(to.path==='/login'){
+  if(to.path === '/login'){
       next()
       return;
   }
