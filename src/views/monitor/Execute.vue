@@ -84,7 +84,7 @@
          <el-button
           size="mini"
           type="warning" style="margin-left:0"
-          v-if="scope.row.status==-1"
+          v-if="scope.row.canRetry"
           @click="handleRetry(scope.$index, scope.row)">重试</el-button>
       </template>
     </el-table-column>
