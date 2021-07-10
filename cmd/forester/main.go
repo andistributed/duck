@@ -18,7 +18,7 @@ var api string
 var version bool
 
 func init() {
-	flag.StringVar(&listen, `listen`, `:8086`, `-listen 127.0.0.1`)
+	flag.StringVar(&listen, `listen`, `:8086`, `-listen 127.0.0.1:8086`)
 	flag.StringVar(&api, `api`, `http://127.0.0.1:2856`, `-api http://127.0.0.1:2856`)
 	flag.BoolVar(&version, `version`, false, `-version`)
 	flag.Parse()
