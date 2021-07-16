@@ -8,6 +8,7 @@ import (
 	"github.com/webx-top/echo"
 	"github.com/webx-top/echo/defaults"
 	"github.com/webx-top/echo/engine/standard"
+	"github.com/webx-top/echo/handler/embed"
 	"github.com/webx-top/echo/middleware"
 )
 
@@ -30,11 +31,12 @@ func main() {
 		return
 	}
 	baseURL := []byte(`window.BASE_URL=` + fmt.Sprintf(`%q`, api) + `;`)
-	fs := echo.NewFileSystems()
+	fs := embed.NewFileSystems()
 	fs.Register(duck.FS)
+	h := embed.File(fs)
 	defaults.Use(middleware.Recover(), middleware.Log(), middleware.Gzip())
-	defaults.Get(`/*`, echo.EmbedFile(fs))
-	defaults.Get(`/`, echo.EmbedFile(fs))
+	defaults.Get(`/*`, h)
+	defaults.Get(`/`, h)
 	defaults.Get(`/config.js`, func(ctx echo.Context) error {
 		ctx.Response().Header().Set(echo.HeaderContentType, echo.MIMEApplicationJavaScriptCharsetUTF8)
 		return ctx.Blob(baseURL)
